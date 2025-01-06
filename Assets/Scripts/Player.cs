@@ -2,54 +2,52 @@ using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
+using TMPro;
+using UnityEngine.UIElements;
 
 public class Player : MonoBehaviour
 {
     Rigidbody2D rb2d;
     Vector2 moveInput;
     public float moveSpeed;
-    public BoxCollider2D bc2d;
-
-
+    PlayerData playerData;
+    public Animator animator;
+    public SpriteRenderer spriteRenderer;
+    
     // Start is called before the first frame update
     void Start()
     {
+        playerData = PlayerData.GetRandomPlayerData("Jair");
         rb2d = GetComponent<Rigidbody2D>();
-        bc2d = GetComponent<BoxCollider2D>();
+
+        Debug.Log(playerData.GetPlayerStats());
     }
 
     // Update is called once per frame
     void FixedUpdate()
     {
-        moveInput.x = Input.GetAxis("Horizontal");
-        moveInput.y = Input.GetAxis("Vertical");
-
-        PlaceInteractionBox();
+        rb2d.velocity = new Vector2(moveInput.x * moveSpeed * Time.deltaTime, moveInput.y * moveSpeed * Time.deltaTime);
 
         moveInput.Normalize();
     }
 
     void Update()
     {
-        rb2d.velocity = moveInput * moveSpeed * Time.deltaTime;
-    }
+        moveInput.x = Input.GetAxis("Horizontal");
+        moveInput.y = Input.GetAxis("Vertical");
 
-    void PlaceInteractionBox()
-    {
-        if (moveInput.x < 0)
-        {
-            bc2d.offset = new Vector2(-1, 0);
-            //bc2d.offset = 0;
-        }
-        else if (moveInput.x > 0)
-        {
-            bc2d.offset = new Vector2(1, 0);
-        }
-    }
 
-    void OnTriggerEnter2D(Collider2D col)
-    {
-        var npc = col.GetComponent<NonPlayableCharacters>();
-        Debug.Log($"{col.name}: {npc.Profile}");
+        animator.SetFloat("ewSpeed", Mathf.Abs(moveInput.x));
+        //animator.SetFloat("ewSpeed", Mathf.Abs(moveInput.y));
+
+        if (moveInput.x > 0)
+        {
+            spriteRenderer.flipX = false;
+        }
+        else if (moveInput.x < 0)
+        {
+            spriteRenderer.flipX = true;
+        }
+
     }
 }

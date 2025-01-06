@@ -4,5 +4,7 @@ using UnityEngine;
 
 public class NonPlayableCharacters : MonoBehaviour
 {
-    public string Profile;
+    public string[] Profile;
+    //name
+    //index flag
 }
