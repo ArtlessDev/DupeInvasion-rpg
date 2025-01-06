@@ -7,16 +7,8 @@ public class PlayerData
 {
     public static string Name;
     public static int Health, Attack, Defense;
-    public Type Element;
+    public GameEnums.Type Element;
 
-    public enum Type
-    {
-        fire,
-        water,
-        earth,
-        air,
-        radiation
-    }
 
     public PlayerData()
     {
@@ -33,7 +25,8 @@ public class PlayerData
         Health = health;
         Attack = attack;
         Defense = defense;
-        Element = Random.Range(0, 4);
+        int randElement = Random.Range(0, 4);
+        Element = (GameEnums.Type)randElement;
     }
 
     private PlayerData(string name)
@@ -42,7 +35,8 @@ public class PlayerData
         Health = Random.Range(10,18);
         Attack = Random.Range(10, 18);
         Defense = Random.Range(10, 18);
-        Element = Random.Range(0, 4);
+        int randElement = Random.Range(0, 4);
+        Element = (GameEnums.Type)randElement;
     }
 
     public static PlayerData GetRandomPlayerData(string name)
@@ -82,7 +76,7 @@ public class PlayerData
         get { return Defense; }
         set { value = Defense; }
     }
-    public Type element
+    public GameEnums.Type element
     {
         get { return Element; }
         set { value = Element; }

@@ -53,5 +53,5 @@ public class AiBattleStats
 {
     public static string name;
     public static int health, attack, defense;
-    public static PlayerData.Type element;
+    public static GameEnums.Type element;
 }
